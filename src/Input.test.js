@@ -5,19 +5,6 @@ import { mount, shallow } from 'enzyme';
 import { findByTestAttr, storeFactory } from '../test/testUtils';
 import Input from './Input';
 
-// jest.mock('./actions');
-// import { guessWord } from './actions' ;
-
-// jest.mock('./actions', () => {
-//   return {
-//     ...jest.requireActual('./actions'),
-//     __esModule: true,
-//     guessWord: jest.fn().mockReturnValue({ type: 'mock' }),
-//     getSecretWord: jest.fn().mockReturnValue({ type: 'mock' })
-//   };
-// });
-// import { guessWord } from './actions' ;
-
 
 /**
  * Factory function to create a ShallowWrapper for the Input component.
@@ -32,7 +19,6 @@ const setup = (initialState = {}) => {
       <Input /> 
     </Provider>
   );
-  // const wrapper = shallow(<Input />)
   return wrapper;
 };
 
@@ -86,16 +72,7 @@ describe('state controlled input field', () => {
     React.useState = savedReactUseState;
   })
   test('state updates with value of input box upon change', () => {
-    // jest.mock('react', () => {
-    //   return {
-    //     ...jest.requireActual('react'),
-    //     __esModule: true,
-    //     useState: jest.fn()
-    //   }
-    // });
     const mockSetCurrentGuess = jest.fn();
-    // const useStateMock = (initState) => [initState, mockSetCurrentGuess];
-    // jest.spyOn(React, 'useState').mockImplementation(useStateMock);
 
     React.useState = jest.fn().mockReturnValue(['', mockSetCurrentGuess]);
     const wrapper = setup({});
@@ -116,28 +93,3 @@ describe('state controlled input field', () => {
     expect(inputText).toHaveLength(0);
   })
 });
-
-// describe('`guessWord` action creator', () => {
-//   let wrapper;
-//   beforeEach(() => {
-//     // create wrapper with "word not yet guessed" state
-//     // will use guessWord mock because of __mocks__/actions file
-//     const setupOutput = setup({ success: false });
-//     wrapper = setupOutput;
-
-//     // add value to input box
-//     const inputBox = findByTestAttr(wrapper, 'input-box');
-//     inputBox.simulate('change', { target: { value: 'train' } })
-
-//     // simulate click on submit button
-//     const submit = findByTestAttr(wrapper, 'submit-button');
-//     submit.simulate('click', { preventDefault() {} });
-//   });
-//   test('calls `guessWord` with input value as argument', () => {
-//     expect(guessWord).toHaveBeenCalledWith('train');
-//   });
-//   test('input box clears on submit', () => {
-//     const inputBox = findByTestAttr(wrapper, 'input-box');
-//     expect(inputBox.text()).toBe('');
-//   });
-// });
